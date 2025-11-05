@@ -1,9 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" }
-  ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" }
+    { "src": "/api/ping", "dest": "/api/ping.js" },
+    { "src": "/api/chat", "dest": "/api/chat.js" }
   ]
 }
