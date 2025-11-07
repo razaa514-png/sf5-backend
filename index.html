@@ -1,266 +1,272 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SoulForge — AI Companions Forged from Lore</title>
+<title>SoulForge — The Noticeboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;700&family=Cardo:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* ----------- THEME VARIABLES ----------- */
   :root{
-    --bg:#0b133a;        /* navy */
-    --bg-deep:#070c2b;
-    --gold:#c9a34a;
-    --gold-2:#e0b84b;
-    --ink:#e8ebff;
-    --muted:#9aa4d3;
-    --panel: rgba(255,255,255,.06);
-    --panel-2: rgba(255,255,255,.08);
-    --ring: 0 0 0 1px rgba(255,255,255,.07), 0 20px 60px rgba(0,0,0,.45);
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
-    --radius: 18px;
+    --wood:#2b1f13;
+    --soot:#1b130c;
+    --ink:#1a1815;
+    --parch:#ede3c7;
+    --parch-deep:#d7caa2;
+    --scar:#7d2e23;
+    --brass:#b08d3b;
+    --brass-dark:#6b5422;
+    --rope:#bca37a;
+    --shadow: 0 12px 40px rgba(0,0,0,.55);
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:radial-gradient(1200px 800px at 10% 5%, #1a245a 0%, var(--bg) 45%, var(--bg-deep) 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1100px;margin:0 auto;padding:28px}
-  .hero{
-    position:relative;overflow:hidden;border-radius:24px;padding:60px 28px;
-    background:
-      radial-gradient(800px 400px at 85% 0%, rgba(201,163,74,.20), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
-    box-shadow: var(--shadow);
-  }
-  /* subtle aura particles */
-  .hero:before,.hero:after{
-    content:"";position:absolute;inset:-30%;background:
-      radial-gradient(closest-side, rgba(255,255,255,.06), transparent 60%);
-    filter:blur(40px);animation:aura 16s linear infinite;opacity:.35;pointer-events:none;
-  }
-  .hero:after{animation-duration:22s;mix-blend-mode:screen;opacity:.22}
-  @keyframes aura{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(6%, -3%) rotate(120deg)}100%{transform:translate(0,0) rotate(360deg)}}
 
-  .brand{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-  .sigil{
+  /* ----------- BASE ----------- */
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:
+    radial-gradient(1200px 800px at 70% 0%, rgba(255,255,240,.05), transparent 60%),
+    linear-gradient(180deg, #23170f, var(--wood) 60%, #110b07);
+    color:#201c15;
+  }
+
+  /* subtle wood plank wall */
+  body:before{
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 2px, transparent 2px 6px),
+      repeating-linear-gradient(180deg, rgba(0,0,0,.12) 0 3px, transparent 3px 100px);
+    mix-blend-mode:soft-light;
+  }
+
+  /* torchlight flicker */
+  .torch{
+    position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;
+    pointer-events:none;mix-blend-mode:screen;opacity:.25;
+    background: radial-gradient(600px 400px at 10% 15%, rgba(255,180,80,.18), transparent 60%),
+                radial-gradient(500px 300px at 90% 12%, rgba(255,120,60,.12), transparent 65%);
+    animation:flick 3.7s ease-in-out infinite;
+  }
+  @keyframes flick{
+    0%,100%{filter:brightness(1)}
+    35%{filter:brightness(1.10)}
+    53%{filter:brightness(.95)}
+    71%{filter:brightness(1.08)}
+  }
+
+  .wrap{max-width:1100px;margin:0 auto;padding:28px}
+
+  /* ----------- NOTICEBOARD (parchment slab) ----------- */
+  .board{
+    position:relative;border-radius:18px;padding:26px;box-shadow:var(--shadow);
+    background:
+      radial-gradient(800px 600px at 50% 0%, rgba(0,0,0,.28), transparent 70%),
+      linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.2) 30%, rgba(0,0,0,.4));
+    border:2px solid #120c07;
+  }
+
+  .leather-strap{
+    position:absolute;top:-12px;left:24px;right:24px;height:28px;border-radius:8px;
+    background:linear-gradient(180deg,#5a3a2a,#3c261a);
+    border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 18px rgba(0,0,0,.5) inset;
+  }
+  .rivet{position:absolute;top:-6px;width:22px;height:22px;border-radius:50%;
+    background:radial-gradient(closest-side,#f7e3a8,var(--brass) 60%, var(--brass-dark));
+    box-shadow:0 2px 2px rgba(0,0,0,.6);border:1px solid rgba(0,0,0,.6)}
+  .rivet.l{left:12px}.rivet.r{right:12px}
+
+  /* parchment sheet */
+  .parch{
+    position:relative;margin-top:14px;border-radius:14px;padding:22px 22px 28px;
+    background:
+      radial-gradient(1200px 800px at 40% -20%, rgba(255,255,255,.5), transparent 55%),
+      linear-gradient(180deg, var(--parch), var(--parch-deep) 78%, #cdbf94);
+    border:1px solid rgba(0,0,0,.25);
+    box-shadow:inset 0 2px 8px rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.35);
+  }
+  /* deckle edge / roughness */
+  .parch:before{
+    content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;mix-blend-mode:multiply;opacity:.25;
+    background:
+      radial-gradient(800px 600px at 0% 0%, rgba(0,0,0,.25), transparent 60%),
+      radial-gradient(600px 800px at 100% 100%, rgba(0,0,0,.2), transparent 60%),
+      repeating-linear-gradient(45deg, rgba(0,0,0,.045) 0 2px, transparent 2px 5px);
+  }
+
+  /* headers & type */
+  .hero-title{
+    font-family:Cinzel,serif;letter-spacing:.5px;margin:0 0 6px;
+    font-size:38px;color:#2a2419;text-shadow:0 1px 0 #f4ecd0;
+  }
+  .sub{font-family:"IM Fell English",serif;color:#3a3120;font-style:italic;margin:0 0 16px}
+
+  .seal{
+    display:inline-block;background:radial-gradient(closest-side,#b94a3e,var(--scar));color:#f7e7d9;
+    border-radius:50%;width:64px;height:64px;line-height:64px;text-align:center;font-weight:700;
+    box-shadow:inset 0 -6px 10px rgba(0,0,0,.25), 0 6px 16px rgba(0,0,0,.3);border:2px solid #5f1c16;
+    transform:rotate(-8deg);
+  }
+
+  .row{display:grid;gap:18px}
+  @media(min-width:900px){ .row{grid-template-columns:1.1fr .9fr;} }
+
+  .pane{background:rgba(0,0,0,.06);border:1px dashed rgba(0,0,0,.35);
+    border-radius:10px;padding:14px}
+
+  /* QUEST BULLETS */
+  .quests{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .quests li{background:rgba(255,255,255,.45);border:1px solid rgba(0,0,0,.22);border-radius:10px;padding:10px 12px}
+  .quests b{font-family:Cinzel,serif}
+
+  /* PARTY ROSTER (personas) */
+  .roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .card{
+    display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:start;
+    background:rgba(255,255,255,.5);border:1px solid rgba(0,0,0,.25);border-radius:12px;padding:12px;
+  }
+  .token{
     width:56px;height:56px;border-radius:50%;
-    background: radial-gradient(closest-side, #f3e6c2, #c8a44a 60%, #7b6120);
-    box-shadow:0 0 0 3px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.4), 0 0 60px rgba(201,163,74,.35) inset;
+    background:radial-gradient(closest-side,#efe2b4,#b89337 60%, #6b5121);
+    box-shadow:inset 0 0 24px rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.4);
     position:relative;
   }
-  .sigil:after{ /* inner rune */
-    content:"";position:absolute;inset:12px;border-radius:50%;
-    background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.35), transparent 40%, rgba(255,255,255,.25));
-    mask: radial-gradient(closest-side, black 55%, transparent 56%),
-          linear-gradient(transparent 44%, black 44% 56%, transparent 56%);
-    mix-blend-mode:overlay;opacity:.9;
+  .token:after{/* simple rune mark */
+    content:"";position:absolute;inset:12px;border:2px solid rgba(0,0,0,.45);border-radius:50%;
+    clip-path:polygon(50% 0, 64% 42%, 98% 42%, 70% 64%, 82% 100%, 50% 78%, 18% 100%, 30% 64%, 2% 42%, 36% 42%);
+    opacity:.6;
   }
-  .title{
-    font-family:Marcellus, serif;font-size:40px;letter-spacing:.5px;line-height:1.1;margin:0;
-    background: linear-gradient(180deg, #fff, #e7e3d6 40%, #c9a34a);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    text-shadow:0 3px 30px rgba(201,163,74,.15);
-  }
-  .tag{color:var(--muted);margin-top:10px;max-width:680px}
-  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .name{font-family:Cinzel,serif;font-weight:700}
+  .blurb{font-family:"IM Fell English",serif;color:#32291a}
+
+  /* BUTTONS */
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
   .btn{
-    padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.08);
-    background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-    backdrop-filter: blur(6px); box-shadow: var(--ring); color:var(--ink); font-weight:600;
+    appearance:none;cursor:pointer;font-weight:700;
+    font-family:Cardo,serif;color:#1b150b;
+    padding:10px 14px;border-radius:8px;border:2px solid #4b3a17;
+    background:linear-gradient(180deg, #e6d7aa, #d2bf86);
+    box-shadow:inset 0 2px 0 rgba(255,255,255,.5), 0 3px 0 #3c2e12, 0 10px 18px rgba(0,0,0,.3);
   }
-  .btn.gold{border-color:rgba(201,163,74,.6);
-    background:linear-gradient(180deg, var(--gold), var(--gold-2));
-    color:#171a2f; text-shadow:0 1px 0 rgba(255,255,255,.2);
-  }
-  .btn:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 20px 50px rgba(0,0,0,.3)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.red{background:linear-gradient(180deg,#b94a3e,#7d2e23);color:#f8e9e2;border-color:#5f1c16}
 
-  .grid{display:grid;gap:18px;margin-top:26px}
-  @media(min-width:900px){ .grid{grid-template-columns:1.1fr .9fr;} }
+  .footer{color:#c9bfa5;text-align:center;margin:26px 0 6px;font-family:Cardo,serif}
+  .tiny{opacity:.75;font-size:13px}
 
-  .panel{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-  .panel h3{font-family:Marcellus,serif;font-size:22px;margin:0 0 8px}
-  .bullets{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-  .bullets li{background:var(--panel-2);border:1px solid rgba(255,255,255,.06);padding:10px 12px;border-radius:12px}
-
-  .personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start}
-  .chip{font-size:12px;color:#12162b;background:linear-gradient(180deg,var(--gold),var(--gold-2));border-radius:999px;padding:6px 10px;font-weight:700;display:inline-block}
-  .avatar{width:46px;height:46px;border-radius:999px;background:
-    radial-gradient(closest-side, #e7ddb2, #b0872e 60%, #6b5323);
-    box-shadow:0 0 0 2px rgba(255,255,255,.06), inset 0 0 30px rgba(255,255,255,.4);
-  }
-
-  .section{margin:48px 0}
-  .section h2{font-family:Marcellus,serif;font-size:28px;margin:0 0 12px}
-  .mini{color:var(--muted);margin-top:6px}
-
-  .footer{opacity:.7;font-size:13px;text-align:center;margin:40px 0 10px}
+  /* small code badge */
+  code{background:rgba(0,0,0,.08);padding:2px 6px;border-radius:6px;border:1px solid rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
+<div class="torch" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="brand">
-        <div class="sigil" aria-hidden="true"></div>
+<div class="wrap">
+  <div class="board">
+    <div class="leather-strap"></div>
+    <div class="rivet l"></div><div class="rivet r"></div>
+
+    <div class="parch">
+      <div style="display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap">
         <div>
-          <h1 class="title">SoulForge</h1>
-          <div class="mini">AI Companions Forged from Lore</div>
+          <h1 class="hero-title">SoulForge: The Noticeboard</h1>
+          <p class="sub">Missives for travelers, contracts for companions, and whispers from elder woods.</p>
         </div>
+        <div class="seal">SF</div>
       </div>
 
-      <p class="tag">
-        Meet companions born from myth and memory. Each persona speaks with a distinct voice, shaped by ancient lore and your choices.
-        Forged for presence, not just answers.
-      </p>
-
-      <div class="cta-row">
-        <a class="btn gold" href="#demo">Try the Live Preview</a>
-        <a class="btn" href="#personas">Explore Personas</a>
-        <a class="btn" href="#early">Join Early Access</a>
-      </div>
-
-      <div class="grid">
-        <div class="panel">
-          <h3>Why SoulForge</h3>
-          <ul class="bullets">
-            <li><strong>Forged Personas:</strong> Crafted prompts + guiding lore for voices that feel alive.</li>
-            <li><strong>Companion Energy:</strong> Not a chatbot—an attentive presence with tone & memory.</li>
-            <li><strong>Modular Build:</strong> Add races, sigils, and personalities with a single config.</li>
-            <li><strong>Own Your World:</strong> Frontend, backend, and deployment under your control.</li>
+      <div class="row">
+        <div class="pane">
+          <ul class="quests">
+            <li><b>Contract I — Forged Voices:</b> Companions shaped by lore, not spreadsheets. Tone, diction, and presence that feel lived-in.</li>
+            <li><b>Contract II — Party of Three:</b> Swap personas like changing parties at a campfire. High Elf, Dark Elf, Oracle… more to come.</li>
+            <li><b>Contract III — Your Banner, Your Rules:</b> Host it, theme it, bind it to your realm. You own the forge.</li>
           </ul>
+          <div class="actions">
+            <a class="btn" href="#party">Meet the Party</a>
+            <a class="btn red" href="#trial">Open the Trial</a>
+          </div>
         </div>
 
-        <div class="panel">
-          <h3>Live Response Preview</h3>
-          <p class="mini">A glimpse of Elyndra’s voice:</p>
-          <div id="preview" class="bullets" style="height:auto">
-            <div class="bullets" id="type">
-              <div class="bullets" style="background:transparent;border:none;padding:0">
-                <span id="typing"></span><span id="caret">▌</span>
-              </div>
+        <div class="pane">
+          <div style="font-family:Cinzel,serif;font-weight:700;margin-bottom:8px">Tavern Talk (Preview)</div>
+          <div id="typebox" style="min-height:76px;font-family:'IM Fell English',serif;color:#2a2319"></div>
+          <div class="actions" style="margin-top:10px">
+            <a class="btn" id="openChat" href="chat-test.html" target="_blank">Open Chat Trial</a>
+            <a class="btn" href="https://sf5-backend.vercel.app/api/ping" target="_blank">Check the Heartbeat</a>
+          </div>
+          <div class="tiny" style="margin-top:6px">Calls your live <code>/api/chat</code> endpoint. Mock mode available while the mage guild (billing) awakens.</div>
+        </div>
+      </div>
+
+      <div id="party" style="margin-top:18px">
+        <h2 class="hero-title" style="font-size:28px;margin:10px 0 8px">Party Roster</h2>
+        <div class="roster">
+          <div class="card">
+            <div class="token"></div>
+            <div>
+              <div class="name">Elyndra, High Elf</div>
+              <div class="blurb">Soft as moon-snow, sharp as star-iron. Speaks in silver, thinks in centuries.</div>
             </div>
           </div>
-          <div class="cta-row" style="margin-top:14px">
-            <a class="btn gold" id="openDemo" href="#demo">Open Live Demo</a>
-            <a class="btn" href="#personas">See More Voices</a>
+
+          <div class="card">
+            <div class="token" style="background:radial-gradient(closest-side,#e9d7f5,#7e5aa8 60%, #3b2853)"></div>
+            <div>
+              <div class="name">Vaelith, Dark Elf</div>
+              <div class="blurb">Candlelit wit and velvet menace. Mercy is a coin he rarely spends.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="token" style="background:radial-gradient(closest-side,#e7f1ff,#96c0ff 60%, #2d4c86)"></div>
+            <div>
+              <div class="name">Lysera, Celestial Oracle</div>
+              <div class="blurb">Moon-quiet and steadfast. Threads of fate drift where her words fall.</div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- PERSONAS -->
-    <section id="personas" class="section">
-      <h2>Featured Personas</h2>
-      <p class="mini">Each companion carries a distinct tone, symbol, and origin.</p>
-      <div class="personas">
-        <div class="card">
-          <div class="avatar" aria-hidden="true"></div>
+      <div id="trial" style="margin-top:22px" class="pane">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
           <div>
-            <div class="chip">High Elf — Elyndra</div>
-            <div class="mini" style="margin-top:6px">
-              Graceful, wise, and timeless. Speaks in luminous imagery—stars, silver, and ancient forests.
-            </div>
+            <div class="name">The Trial</div>
+            <div class="blurb">Prove your worth. Speak to a forged soul and see if it speaks back.</div>
           </div>
-        </div>
-
-        <div class="card">
-          <div class="avatar" aria-hidden="true" style="background:radial-gradient(closest-side,#dfd4ff,#8a6bff 60%,#3d2e80)"></div>
-          <div>
-            <div class="chip">Dark Elf — Vaelith</div>
-            <div class="mini" style="margin-top:6px">
-              Brooding wit, velvet menace, and ruthless clarity. Admires cunning and resolve.
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="avatar" aria-hidden="true" style="background:radial-gradient(closest-side,#f3f6ff,#b8d8ff 60%,#3a5c9b)"></div>
-          <div>
-            <div class="chip">Celestial Oracle — Lysera</div>
-            <div class="mini" style="margin-top:6px">
-              Prophetic calm, moonlit counsel. Speaks in threads of fate and quiet certainty.
-            </div>
-          </div>
+          <a class="btn red" href="chat-test.html" target="_blank">Enter Trial</a>
         </div>
       </div>
-    </section>
 
-    <!-- DEMO -->
-    <section id="demo" class="section">
-      <h2>Try the Live Preview</h2>
-      <p class="mini">Launch the in-browser chat test that talks to the deployed backend.</p>
-      <div class="panel" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-        <div>
-          <div style="font-weight:700;margin-bottom:6px">SoulForge Chat Test</div>
-          <div class="mini">Opens a simple chat UI that connects to <code>/api/chat</code>.</div>
-        </div>
-        <div class="cta-row" style="margin:0">
-          <!-- Change this href to the location of your local chat-test.html if you publish it -->
-          <a class="btn gold" target="_blank" id="launchChat">Open Chat</a>
-          <a class="btn" href="https://sf5-backend.vercel.app/api/ping" target="_blank">Health Check</a>
-        </div>
+      <div style="margin-top:24px;text-align:center" class="tiny">
+        © <span id="year"></span> SoulForge • Ink, iron, and a little starlight.
       </div>
-    </section>
-
-    <!-- EARLY ACCESS -->
-    <section id="early" class="section">
-      <h2>Become a Founder</h2>
-      <p class="mini">Join the Founders’ Circle for early access, exclusive races, and priority features.</p>
-      <div class="panel" style="display:grid;gap:10px">
-        <div><strong>Founders Pass</strong> — $9/mo early access • special sigils • priority input</div>
-        <div><strong>Artisan Tier</strong> — $29/mo persona forging • custom tone sculpting</div>
-        <div><strong>Guild Leader</strong> — $99/mo white-label & team controls (limited)</div>
-        <div class="cta-row" style="margin-top:10px">
-          <!-- Replace these with your Gumroad/LemonSqueezy links when ready -->
-          <a class="btn gold" href="#" target="_blank">Reserve a Founders Pass</a>
-          <a class="btn" href="#" target="_blank">Request a Demo</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section">
-      <h2>FAQ</h2>
-      <div class="panel">
-        <div class="bullets">
-          <div><strong>Is the demo real?</strong> Yes. It calls a live backend you control on Vercel.</div>
-          <div><strong>Will it have memory?</strong> Yes—short-term memory comes first, then persistent saves per persona.</div>
-          <div><strong>Is NSFW allowed?</strong> No. SoulForge is intimacy through presence, conversation, and story.</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="footer">© <span id="year"></span> SoulForge • Forged in Flame. Bound by Soul.</div>
+    </div>
   </div>
 
+  <div class="footer tiny">Built with Vercel • GitHub • good old parchment</div>
+</div>
+
 <script>
-  // year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // type preview
-  const line = "“Ah, traveler. The stars are bright tonight; ask, and I shall listen.” — Elyndra";
-  const t = document.getElementById('typing');
-  const caret = document.getElementById('caret');
-  let i = 0;
-  function tick(){ if(i<=line.length){ t.textContent = line.slice(0,i++); setTimeout(tick, 24);} }
-  tick();
-  setInterval(()=>{ caret.style.opacity = (caret.style.opacity==='0'?'1':'0');}, 500);
+  // tavern talk typewriter
+  const lines = [
+    "Elyndra: “Ah, traveler. The stars are loud tonight. Ask, and I shall listen.”",
+    "Vaelith: “You seek counsel in shadow? Hnh. Sit, then—speak true.”",
+    "Lysera: “A hush upon the thread. Your question tugs the weave.”"
+  ];
+  const el = document.getElementById('typebox');
+  let i=0, j=0;
 
-  // open demo button:
-  // If you deploy your chat-test.html somewhere, put that URL here.
-  // For now, we’ll open a small inline demo page you already have locally.
-  document.getElementById('openDemo')?.addEventListener('click', (e)=>{
-    e.preventDefault();
-    document.getElementById('launchChat').focus();
-    document.getElementById('demo').scrollIntoView({behavior:'smooth',block:'start'});
-  });
-
-  // Point this to your local file path or hosted copy of chat-test.html.
-  // If you host it under this same Vercel project at /chat-test.html, update href accordingly.
-  const chatURL = "chat-test.html"; // <— change if you upload that file somewhere else
-  const launch = document.getElementById('launchChat');
-  launch.href = chatURL;
+  function type() {
+    const text = lines[i];
+    el.textContent = text.slice(0, j++);
+    if (j <= text.length) {
+      setTimeout(type, 22);
+    } else {
+      setTimeout(()=>{ i = (i+1)%lines.length; j = 0; setTimeout(type, 900) }, 900);
+    }
+  }
+  type();
 </script>
 </body>
 </html>
