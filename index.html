@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SoulForge — AI Companions Forged from Lore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b133a;        /* navy */
+    --bg-deep:#070c2b;
+    --gold:#c9a34a;
+    --gold-2:#e0b84b;
+    --ink:#e8ebff;
+    --muted:#9aa4d3;
+    --panel: rgba(255,255,255,.06);
+    --panel-2: rgba(255,255,255,.08);
+    --ring: 0 0 0 1px rgba(255,255,255,.07), 0 20px 60px rgba(0,0,0,.45);
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:radial-gradient(1200px 800px at 10% 5%, #1a245a 0%, var(--bg) 45%, var(--bg-deep) 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px}
+  .hero{
+    position:relative;overflow:hidden;border-radius:24px;padding:60px 28px;
+    background:
+      radial-gradient(800px 400px at 85% 0%, rgba(201,163,74,.20), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    box-shadow: var(--shadow);
+  }
+  /* subtle aura particles */
+  .hero:before,.hero:after{
+    content:"";position:absolute;inset:-30%;background:
+      radial-gradient(closest-side, rgba(255,255,255,.06), transparent 60%);
+    filter:blur(40px);animation:aura 16s linear infinite;opacity:.35;pointer-events:none;
+  }
+  .hero:after{animation-duration:22s;mix-blend-mode:screen;opacity:.22}
+  @keyframes aura{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(6%, -3%) rotate(120deg)}100%{transform:translate(0,0) rotate(360deg)}}
+
+  .brand{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+  .sigil{
+    width:56px;height:56px;border-radius:50%;
+    background: radial-gradient(closest-side, #f3e6c2, #c8a44a 60%, #7b6120);
+    box-shadow:0 0 0 3px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.4), 0 0 60px rgba(201,163,74,.35) inset;
+    position:relative;
+  }
+  .sigil:after{ /* inner rune */
+    content:"";position:absolute;inset:12px;border-radius:50%;
+    background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.35), transparent 40%, rgba(255,255,255,.25));
+    mask: radial-gradient(closest-side, black 55%, transparent 56%),
+          linear-gradient(transparent 44%, black 44% 56%, transparent 56%);
+    mix-blend-mode:overlay;opacity:.9;
+  }
+  .title{
+    font-family:Marcellus, serif;font-size:40px;letter-spacing:.5px;line-height:1.1;margin:0;
+    background: linear-gradient(180deg, #fff, #e7e3d6 40%, #c9a34a);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 3px 30px rgba(201,163,74,.15);
+  }
+  .tag{color:var(--muted);margin-top:10px;max-width:680px}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{
+    padding:12px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.08);
+    background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    backdrop-filter: blur(6px); box-shadow: var(--ring); color:var(--ink); font-weight:600;
+  }
+  .btn.gold{border-color:rgba(201,163,74,.6);
+    background:linear-gradient(180deg, var(--gold), var(--gold-2));
+    color:#171a2f; text-shadow:0 1px 0 rgba(255,255,255,.2);
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.2),0 20px 50px rgba(0,0,0,.3)}
+
+  .grid{display:grid;gap:18px;margin-top:26px}
+  @media(min-width:900px){ .grid{grid-template-columns:1.1fr .9fr;} }
+
+  .panel{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .panel h3{font-family:Marcellus,serif;font-size:22px;margin:0 0 8px}
+  .bullets{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+  .bullets li{background:var(--panel-2);border:1px solid rgba(255,255,255,.06);padding:10px 12px;border-radius:12px}
+
+  .personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start}
+  .chip{font-size:12px;color:#12162b;background:linear-gradient(180deg,var(--gold),var(--gold-2));border-radius:999px;padding:6px 10px;font-weight:700;display:inline-block}
+  .avatar{width:46px;height:46px;border-radius:999px;background:
+    radial-gradient(closest-side, #e7ddb2, #b0872e 60%, #6b5323);
+    box-shadow:0 0 0 2px rgba(255,255,255,.06), inset 0 0 30px rgba(255,255,255,.4);
+  }
+
+  .section{margin:48px 0}
+  .section h2{font-family:Marcellus,serif;font-size:28px;margin:0 0 12px}
+  .mini{color:var(--muted);margin-top:6px}
+
+  .footer{opacity:.7;font-size:13px;text-align:center;margin:40px 0 10px}
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="brand">
+        <div class="sigil" aria-hidden="true"></div>
+        <div>
+          <h1 class="title">SoulForge</h1>
+          <div class="mini">AI Companions Forged from Lore</div>
+        </div>
+      </div>
+
+      <p class="tag">
+        Meet companions born from myth and memory. Each persona speaks with a distinct voice, shaped by ancient lore and your choices.
+        Forged for presence, not just answers.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn gold" href="#demo">Try the Live Preview</a>
+        <a class="btn" href="#personas">Explore Personas</a>
+        <a class="btn" href="#early">Join Early Access</a>
+      </div>
+
+      <div class="grid">
+        <div class="panel">
+          <h3>Why SoulForge</h3>
+          <ul class="bullets">
+            <li><strong>Forged Personas:</strong> Crafted prompts + guiding lore for voices that feel alive.</li>
+            <li><strong>Companion Energy:</strong> Not a chatbot—an attentive presence with tone & memory.</li>
+            <li><strong>Modular Build:</strong> Add races, sigils, and personalities with a single config.</li>
+            <li><strong>Own Your World:</strong> Frontend, backend, and deployment under your control.</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3>Live Response Preview</h3>
+          <p class="mini">A glimpse of Elyndra’s voice:</p>
+          <div id="preview" class="bullets" style="height:auto">
+            <div class="bullets" id="type">
+              <div class="bullets" style="background:transparent;border:none;padding:0">
+                <span id="typing"></span><span id="caret">▌</span>
+              </div>
+            </div>
+          </div>
+          <div class="cta-row" style="margin-top:14px">
+            <a class="btn gold" id="openDemo" href="#demo">Open Live Demo</a>
+            <a class="btn" href="#personas">See More Voices</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAS -->
+    <section id="personas" class="section">
+      <h2>Featured Personas</h2>
+      <p class="mini">Each companion carries a distinct tone, symbol, and origin.</p>
+      <div class="personas">
+        <div class="card">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <div class="chip">High Elf — Elyndra</div>
+            <div class="mini" style="margin-top:6px">
+              Graceful, wise, and timeless. Speaks in luminous imagery—stars, silver, and ancient forests.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="avatar" aria-hidden="true" style="background:radial-gradient(closest-side,#dfd4ff,#8a6bff 60%,#3d2e80)"></div>
+          <div>
+            <div class="chip">Dark Elf — Vaelith</div>
+            <div class="mini" style="margin-top:6px">
+              Brooding wit, velvet menace, and ruthless clarity. Admires cunning and resolve.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="avatar" aria-hidden="true" style="background:radial-gradient(closest-side,#f3f6ff,#b8d8ff 60%,#3a5c9b)"></div>
+          <div>
+            <div class="chip">Celestial Oracle — Lysera</div>
+            <div class="mini" style="margin-top:6px">
+              Prophetic calm, moonlit counsel. Speaks in threads of fate and quiet certainty.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="section">
+      <h2>Try the Live Preview</h2>
+      <p class="mini">Launch the in-browser chat test that talks to the deployed backend.</p>
+      <div class="panel" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">SoulForge Chat Test</div>
+          <div class="mini">Opens a simple chat UI that connects to <code>/api/chat</code>.</div>
+        </div>
+        <div class="cta-row" style="margin:0">
+          <!-- Change this href to the location of your local chat-test.html if you publish it -->
+          <a class="btn gold" target="_blank" id="launchChat">Open Chat</a>
+          <a class="btn" href="https://sf5-backend.vercel.app/api/ping" target="_blank">Health Check</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EARLY ACCESS -->
+    <section id="early" class="section">
+      <h2>Become a Founder</h2>
+      <p class="mini">Join the Founders’ Circle for early access, exclusive races, and priority features.</p>
+      <div class="panel" style="display:grid;gap:10px">
+        <div><strong>Founders Pass</strong> — $9/mo early access • special sigils • priority input</div>
+        <div><strong>Artisan Tier</strong> — $29/mo persona forging • custom tone sculpting</div>
+        <div><strong>Guild Leader</strong> — $99/mo white-label & team controls (limited)</div>
+        <div class="cta-row" style="margin-top:10px">
+          <!-- Replace these with your Gumroad/LemonSqueezy links when ready -->
+          <a class="btn gold" href="#" target="_blank">Reserve a Founders Pass</a>
+          <a class="btn" href="#" target="_blank">Request a Demo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2>FAQ</h2>
+      <div class="panel">
+        <div class="bullets">
+          <div><strong>Is the demo real?</strong> Yes. It calls a live backend you control on Vercel.</div>
+          <div><strong>Will it have memory?</strong> Yes—short-term memory comes first, then persistent saves per persona.</div>
+          <div><strong>Is NSFW allowed?</strong> No. SoulForge is intimacy through presence, conversation, and story.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© <span id="year"></span> SoulForge • Forged in Flame. Bound by Soul.</div>
+  </div>
+
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // type preview
+  const line = "“Ah, traveler. The stars are bright tonight; ask, and I shall listen.” — Elyndra";
+  const t = document.getElementById('typing');
+  const caret = document.getElementById('caret');
+  let i = 0;
+  function tick(){ if(i<=line.length){ t.textContent = line.slice(0,i++); setTimeout(tick, 24);} }
+  tick();
+  setInterval(()=>{ caret.style.opacity = (caret.style.opacity==='0'?'1':'0');}, 500);
+
+  // open demo button:
+  // If you deploy your chat-test.html somewhere, put that URL here.
+  // For now, we’ll open a small inline demo page you already have locally.
+  document.getElementById('openDemo')?.addEventListener('click', (e)=>{
+    e.preventDefault();
+    document.getElementById('launchChat').focus();
+    document.getElementById('demo').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // Point this to your local file path or hosted copy of chat-test.html.
+  // If you host it under this same Vercel project at /chat-test.html, update href accordingly.
+  const chatURL = "chat-test.html"; // <— change if you upload that file somewhere else
+  const launch = document.getElementById('launchChat');
+  launch.href = chatURL;
+</script>
+</body>
+</html>
